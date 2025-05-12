@@ -1,5 +1,5 @@
 #include <iostream>
-#include "/home/seb3mz/work/code/ky/data_structure/2_linear_list_线性表/21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
+#include "../../21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
 using namespace std;
 
 /*
@@ -9,7 +9,7 @@ using namespace std;
         const SqList& L1:有序表1
         const SqList& L2:有序表2
     输出:
-        void
+        bool:表示是否合并成功
     分析思路:
         根据有序表的结构，分别遍历并比对 L1、L2 表元素大小，按照从小到大顺序插入新表 Resql 中
     实现细节:
@@ -24,19 +24,19 @@ using namespace std;
             O(1)
 */
 
-void MergeList(SqList<int>& Resql, const SqList<int>& L1, const SqList<int>& L2)
+bool MergeList(SqList<int>& Resql, const SqList<int>& L1, const SqList<int>& L2)
 {
     //1. 判空
     if(L1.Empty() || L2.Empty())
     {
         cout << "表空" << endl;
-        return;
+        return false;
     }
     //2. 判满
     if(L1.Length() + L2.Length() > MaxSize)
     {
         cout << "表长不足" << endl;
-        return;
+        return false;
     }
     //3. 比对 L1 和 L2 元素，并插入新表 Resql 中
     int Resql_pos = 1, L1_pos = 1, L2_pos = 1;
@@ -61,7 +61,7 @@ void MergeList(SqList<int>& Resql, const SqList<int>& L1, const SqList<int>& L2)
     {
         Resql.ListInsert(Resql_pos++, L2.GetElem(L2_pos++));
     }
-
+    return true;
 }
 
 int main()

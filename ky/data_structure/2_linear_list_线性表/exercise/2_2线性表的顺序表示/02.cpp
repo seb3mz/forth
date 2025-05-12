@@ -1,5 +1,5 @@
 #include <iostream>
-#include "/home/seb3mz/work/code/ky/data_structure/2_linear_list_线性表/21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
+#include "../../21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
 using namespace std;
 
 /*

@@ -3,17 +3,19 @@
 using namespace std;
 
 /*
-    功能:将一个数组内的两个顺序表的位置互换 (a1,a2,...,am)和(b1,b2,...bn) 换为 (b1,b2,...bn)和(a1,a2,...am)
+    功能:将数组 R 中的元素 a1,a2,a3,...an 循环左移 p 个位置，得到 ap,ap+1,....
     输入:
-        SqList& sql; //待置换元素位置的顺序表
-    输出:
-        void
+        SqList& Sql
+        int p: 循环左移的次数
+    输出
+        void:
     分析思路:
-        将顺序表 a1,a2,...bn 逆序得到 bn,bn-1,...,am,am-1,...a2,a1
-        再将 bn,..b1 逆序得 b1,b2,...,bn
-        再将 am,am-1,...a2,a1 逆序的 a1,a2,...am-1,am
+        原本的序列为  A1,A2,...Ap-1,Ap,Ap+1,...An-1,An
+        移动后序列为  Ap+1,Ap+2,....An,A1,A2,...Ap
+        由 An,An-1,...,Ap+1,Ap,Ap-1,....A2,A1 分为两段 [An,An-1,...Ap+1] 和 [Ap,Ap-1,...A2,A1] 分别逆序得到
     实现细节:
-        
+        先对整个数组逆序
+        再分别对前 n-p 个元素逆序，再对后 p 个元素逆序即得
     注意点:
         
     时间复杂度:
@@ -34,23 +36,24 @@ void ReverseSql(SqList<int>& L, int start, int end)
     }
 }
 
-void SwapPosOfSeqTable(SqList<int>& sql, int m, int n)
+void RotateLeft(SqList<int>& Sql, int p)
 {
     //1. 判空
-    if(sql.Empty())
+    if(Sql.Empty())
     {
-        cout << "空表" << endl;
+        cout << "表空" << endl;
         return;
     }
-
-    ReverseSql(sql, 1, m+n);
-    ReverseSql(sql, 1, n);
-    ReverseSql(sql, n+1, m+n);
+    //2. 分段逆置
+    ReverseSql(Sql, 1, Sql.Length());
+    ReverseSql(Sql, 1, Sql.Length()-p);
+    ReverseSql(Sql, Sql.Length()-p+1, Sql.Length());
 }
 
 int main()
 {
     SqList<int> Sql;
+
     Sql.InitList();
     Sql.ListInsert(1,1);
     Sql.ListInsert(2,2);
@@ -58,15 +61,11 @@ int main()
     Sql.ListInsert(4,4);
     Sql.ListInsert(5,5);
     Sql.ListInsert(6,11);
-    Sql.ListInsert(7,12);
-    Sql.ListInsert(8,13);
-    Sql.ListInsert(9,14);
-    Sql.ListInsert(10,15);
-    Sql.ListInsert(11,16);
+    Sql.ListInsert(7,22);
+    Sql.ListInsert(8,33);
     Sql.printSeq();
 
-    SwapPosOfSeqTable(Sql, 5, 6);
-
+    RotateLeft(Sql, 3);
     Sql.printSeq();
     return 0;
 }

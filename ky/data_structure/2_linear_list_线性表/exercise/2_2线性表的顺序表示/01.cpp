@@ -1,5 +1,5 @@
 #include <iostream>
-#include "/home/seb3mz/work/code/ky/data_structure/2_linear_list_线性表/21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
+#include "../../21_sequence_table_顺序表/211_static_sequence_table_静态顺序表.h"
 using namespace std;
 
 /*
@@ -8,7 +8,7 @@ using namespace std;
         SqList& L:待删除最小值的静态顺序表
         int& val: 最小值
     输出:
-        void
+        bool:是否删除成功
     分析思路:
        遍历顺序表，把最小值与所有元素比对，找到最小值
     实现细节:
@@ -22,13 +22,13 @@ using namespace std;
             O(1)
 */
 
-void DeleteSmallest(SqList<int>& L, int& value)
+bool DeleteSmallest(SqList<int>& L, int& value)
 {
     //1. 判断顺序表是否为空
     if(L.Empty())
     {
         cout << "顺序表为空" << endl;
-        return;
+        return false;
     }
 
     //2. 定义临时变量 smallest 存储最小值, smallpos 存储最小值位序
@@ -51,6 +51,7 @@ void DeleteSmallest(SqList<int>& L, int& value)
     L[smallpos] = L.GetElem(L.Length());
     L.DecreaseLength();
     //L.length--
+    return true;
 }
 
 int main()
