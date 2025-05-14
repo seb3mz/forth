@@ -2,6 +2,12 @@
 #include "221_list_单链表.h"
 using namespace std;
 
+typedef struct LNode
+ {
+    int data;
+    struct LNode* next;
+}LNode, *LinkList;
+
 //1. 初始化链表
 bool InitList(LinkList &L)
 {
