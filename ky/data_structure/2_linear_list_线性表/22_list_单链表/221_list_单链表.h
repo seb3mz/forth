@@ -21,6 +21,11 @@ public:
             DestoryList();
         }
     }
+    //获取头结点，测试使用
+    LNode* GetHeadNode()
+    {
+        return head;
+    }
     //1.初始化链表
     bool InitList();
 

@@ -4,51 +4,55 @@ using namespace std;
 using LNode=LinkList<int>::LNode;
 
 /*
-    功能:在单链表中删除值为 x 的结点
+    功能:将带头结点的单链表逆置
     输入:
         LinkList<int>& L:待操作的单链表
-        int x:
+        int min:范围下限
+        int max:范围上限
     输出:
-        int:被删除 x 的个数
+        int:删除的个数
     分析思路:
-       遍历顺序表，把元素与x比对，若相等则删除;若不等，继续向后遍历
+        遍历链表，对比范围，如果处于范围内，则删除
     实现细节:
-        定义 LNode* cur 表示当前指针指向的位置的元素
-        定义 LNode* pre 表示前驱结点元素，以便在遇到 x 后更改指针域使用
+        定义 LNode* pre, LNode* cur 负责遍历和修改指针域
     注意点:
-        a. 单链表为空的情况
+        
     时间复杂度:
             O(n)
     空间复杂度:
             O(1)
 */
 
-int DeleteX(LinkList<int>& L, int x)
+int DeleteSpecRangeValue(LinkList<int>& L, int min, int max)
 {
+    //1. 链表判空
     if(L.Empty())
     {
         cout << "表空" << endl;
-        return 0;
+        return false;
     }
-    int cnt = 0;
+
+    //2. 遍历并修改
     LNode* pre = L.GetHeadNode();
     LNode* cur = pre->next;
+    int cnt = 0;
+
     while(cur != nullptr)
     {
-        //当遇到 x 时，需要修改 pre 指针next域指向，释放 cur 所指结点，并且移动 cur 到下一结点
-        if(cur->data == x)
+        if(cur->data >min && cur->data < max)
         {
-            cnt++;
             pre->next = cur->next;
             free(cur);
             cur = pre->next;
+            cnt++;
         }
         else
         {
             pre = cur;
             cur = cur->next;
-        }  
+        }
     }
+
     return cnt;
 }
 
@@ -67,8 +71,7 @@ int main()
     L.ListInsert(4, 4);
     L.ListInsert(5, 3);
     L.PrintList();
-
-    cout << "元素3有 " << DeleteX(L, 3) << "个" << endl;
+    cout << "删除" << DeleteSpecRangeValue(L, 5, 6) << "个元素" << endl;
     L.PrintList();
     
     // std::cout.rdbuf(original_buf);

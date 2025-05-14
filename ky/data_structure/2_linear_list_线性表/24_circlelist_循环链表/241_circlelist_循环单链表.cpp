@@ -1,6 +1,11 @@
 #include <iostream>
-#include "241_circlelist_循环单链表.h"
 using namespace std;
+
+typedef struct LNode
+{
+    int data;
+    struct LNode* next;
+}LNode, *LinkList;
 
 //初始化链表
 bool InitList(LinkList &L)

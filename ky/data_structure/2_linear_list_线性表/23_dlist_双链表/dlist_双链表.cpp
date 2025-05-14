@@ -1,6 +1,12 @@
-#include "dlist_双链表.h"
 #include <iostream>
 using namespace std;
+
+//双链表
+typedef struct DNode
+{
+    int data;
+    DNode *prior, *next;
+}DNode, *DLinkList;
 
 //初始化双链表
 bool InitDLinkList(DLinkList &L)

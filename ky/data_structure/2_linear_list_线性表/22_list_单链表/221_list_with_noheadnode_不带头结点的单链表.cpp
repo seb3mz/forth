@@ -53,7 +53,7 @@ LNode* GetElem(const LinkList& L, int i)
 {
     LNode* tmp = L;
     int pos = 1;
-    while(tmp && pos <= i)
+    while(tmp && pos < i)
     {
         tmp = tmp->next;
         pos++;

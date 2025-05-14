@@ -1,1 +1,6 @@
 1. 涉及到增删操作的考虑下其前后的状态
+
+2. git status 出现中文乱码使用
+git config --global core.quotepath false
+git config --global core.assumeunicode true
+

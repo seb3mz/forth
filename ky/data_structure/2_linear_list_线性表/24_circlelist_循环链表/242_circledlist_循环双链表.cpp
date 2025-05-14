@@ -1,6 +1,11 @@
 #include <iostream>
-#include "242_circledlist_循环双链表.h"
 using namespace std;
+
+typedef struct DNode
+{
+    int data;
+    DNode *prior, *next;
+}DNode, *DLinkList;
 
 //初始化链表
 bool InitList(DLinkList &L)
