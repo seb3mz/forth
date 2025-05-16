@@ -4,3 +4,9 @@
 git config --global core.quotepath false
 git config --global core.assumeunicode true
 
+2. 对于链表，经常采用的方法有
+    头插法
+    尾插法
+    逆置法
+    归并法
+    双指针法
