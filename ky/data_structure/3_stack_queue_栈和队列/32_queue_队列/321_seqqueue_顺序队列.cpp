@@ -2,6 +2,12 @@
 #include <iostream>
 using namespace std;
 
+typedef struct {
+    int data[MaxSize];  //用静态数组存放队列元素
+    int front, rear;    //队头指针和队尾指针
+    int length;
+} SqQueue;
+
 //初始化队列
 void InitQueue(SqQueue& Q)
 {
@@ -64,25 +70,25 @@ bool QueueEmpty(const SqQueue& Q)
     return Q.length==0?true:false;
 }
 
-int main()
-{
-    //测试队列操作
-    SqQueue sq;
-    InitQueue(sq);
+// int main()
+// {
+//     //测试队列操作
+//     SqQueue sq;
+//     InitQueue(sq);
 
-    EnQueue(sq, 1);
-    EnQueue(sq, 2);
-    EnQueue(sq, 3);
-    EnQueue(sq, 4);
-    EnQueue(sq, 5);
-    EnQueue(sq, 6);
+//     EnQueue(sq, 1);
+//     EnQueue(sq, 2);
+//     EnQueue(sq, 3);
+//     EnQueue(sq, 4);
+//     EnQueue(sq, 5);
+//     EnQueue(sq, 6);
 
-    int ret = -1;
-    DeQueue(sq, ret);
-    DeQueue(sq, ret);
-    DeQueue(sq, ret);
-    DeQueue(sq, ret);
-    DeQueue(sq, ret);
-    DeQueue(sq, ret);
-    return 0;
-}
+//     int ret = -1;
+//     DeQueue(sq, ret);
+//     DeQueue(sq, ret);
+//     DeQueue(sq, ret);
+//     DeQueue(sq, ret);
+//     DeQueue(sq, ret);
+//     DeQueue(sq, ret);
+//     return 0;
+// }

@@ -3,6 +3,7 @@ typedef struct LinkNode {
     struct LinkNode* next;
 } LinkNode;
 
+//带头结点的链队
 typedef struct {
     LinkNode *front, *rear;
 }LinkQueue;
