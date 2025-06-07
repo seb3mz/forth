@@ -2,7 +2,7 @@
 #define SEQ_QUEUE_H
 #include <iostream>
 using namespace std;
-#define QMaxSize 5
+#define QMaxSize 500
 
 template<typename T>
 class SqQueue
@@ -15,19 +15,19 @@ public:
     void DestroyQueue();
 
     //入队
-    bool EnQueue(int e);
+    bool EnQueue(T e);
 
     //出队
-    bool DeQueue(int &e);
+    bool DeQueue(T &e);
 
     //获取队首元素
-    bool GetHead(int &e)const;
+    bool GetHead(T &e)const;
 
     //判断队空
     bool QueueEmpty()const;
 
 private:
-    int data[QMaxSize];  //用静态数组存放队列元素
+    T data[QMaxSize];  //用静态数组存放队列元素
     int front, rear;    //队头指针和队尾指针
     int length;
 };
@@ -49,7 +49,7 @@ void SqQueue<T>::DestroyQueue()
 
 //入队
 template<typename T>
-bool SqQueue<T>::EnQueue(int e)
+bool SqQueue<T>::EnQueue(T e)
 {
     if(length == QMaxSize)
     {
@@ -63,7 +63,7 @@ bool SqQueue<T>::EnQueue(int e)
 
 //出队
 template<typename T>
-bool SqQueue<T>::DeQueue(int &e)
+bool SqQueue<T>::DeQueue(T &e)
 {
     if(length == 0)
     {
@@ -77,7 +77,7 @@ bool SqQueue<T>::DeQueue(int &e)
 
 //获取队首元素
 template<typename T>
-bool SqQueue<T>::GetHead(int &e) const
+bool SqQueue<T>::GetHead(T &e) const
 {
     if(length == 0)
     {

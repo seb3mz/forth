@@ -69,3 +69,11 @@ void PostOrderTraverse(BiTree tree);
 
 //层序遍历二叉树
 void LevelOrderTraverse(BiTree tree);
+
+//非递归先序遍历
+void NonRecursiveSequentialTraversalBT(BiTree tree);
+
+//非递归中序遍历
+
+//非递归后序遍历
+// 习题 2_05

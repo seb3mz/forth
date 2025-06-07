@@ -21,6 +21,8 @@ public:
     bool Pop(T& v);
     //获取栈顶元素
     bool GetTop(T& v) const;
+    //输出所有元素
+    void PrintSeq() const;
 
 private:
     T data[MaxSize];
@@ -84,6 +86,19 @@ bool SeqStack<T>::GetTop(T &e) const
     }
     e = data[top];
     return true;
+}
+
+//输出所有元素
+template<typename T>
+void SeqStack<T>::PrintSeq() const
+{
+    int pos = top;
+    while(pos >= 0)
+    {
+        cout << data[pos] << " ";
+        pos--;
+    }
+    cout << endl;
 }
 
 #endif //SEQSTACK_H

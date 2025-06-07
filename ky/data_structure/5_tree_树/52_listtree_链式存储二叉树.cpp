@@ -88,6 +88,12 @@ void LevelOrderTraverse(BiTree tree)
     // }
 }
 
+//非递归先序遍历
+void NonRecursiveSequentialTraversalBT(BiTree tree)
+{
+    
+}
+
 int main()
 {
     BiTree tree;
