@@ -15,5 +15,6 @@ typedef struct ArcNode {
 //邻接表法存储图
 typedef struct {
     AdjList vertices;
-    int vexnum, arcnum;
+    int vexnum; //顶点数
+    int arcnum; //边数
 } ALGraph;
