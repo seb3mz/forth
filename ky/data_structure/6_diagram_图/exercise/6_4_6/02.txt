@@ -1,0 +1,180 @@
+201.  
+    "破圈法"可以生成最小生成树
+    该方法既可以保证连通，也可以保证权值最小
+
+202.
+    1)
+        邻接矩阵
+            1   2   3   4   5   6   7
+        1   0   1   1   1   0   0   0
+        2   0   0   1   0   1   0   0
+        3   0   0   0   0   1   0   0
+        4   0   0   0   0   0   1   0
+        5   0   0   0   0   0   0   1
+        6   0   0   1   0   0   0   1
+        7   0   0   0   0   0   0   0
+        深度优先遍历序列
+            1 2 3 5 7 4 6
+    2)
+        0   x   7:每个顶点都是一个强连通分量
+    3)  
+        1 2 4 6 3 5 7
+        1 4 6 2 3 5 7
+    4)
+        Prim算法
+
+203
+            1   2   3   4   5   6
+    final   √   x   x   x   x   x
+    dist    0   7   11  ∞   ∞   ∞ 
+    path    -1  1   1   -1  -1  -1
+
+            1   2   3   4   5   6
+    final   √   √   x   x   x   x
+    dist    0   7   11  16  ∞   ∞ 
+    path    -1  1   1   2  -1  -1
+
+            1   2   3   4   5   6
+    final   √   √   √   x   x   x
+    dist    0   7   11  16  18  19 
+    path    -1  1   1   2   3   3
+
+            1   2   3   4   5   6
+    final   √   √   √   √   x   x
+    dist    0   7   11  16  18  19 
+    path    -1  1   1   2   3   3
+
+            1   2   3   4   5   6
+    final   √   √   √   √   √   x
+    dist    0   7   11  16  18  19 
+    path    -1  1   1   2   3   3
+
+            1   2   3   4   5   6
+    final   √   √   √   √   √   √
+    dist    0   7   11  16  18  19 
+    path    -1  1   1   2   3   3
+
+204
+    1)
+        邻接表
+        V1  -> V2 -> V3 -> V5
+        V2  -> V3 -> V4
+        V3  -> V5 -> V6
+        V4  -> V6
+        V5  -> V7
+        V6  -> V7 -> V8
+        V7  -> V9
+        V8  -> V9
+        V9
+    2)
+        16
+    3)
+        V1 -> V3 -> V5 -> V7 -> V9
+    4)
+        a2 a6 a9 a12
+
+205 
+    1) 
+    2)
+            1   2   3   4   5   6
+        Ve  0   3   2   6   6   8
+        Vl  0   4   2   7   6   8
+    3)
+        B、E、G     8
+
+206 
+    不一定是，Dijkstra 只能保证单源最短路径，不能保证整个生成树的权值最小
+
+208
+    不可行，
+
+209
+    1)
+        0   1   2   3   4   5
+    0   0   4   6   ∞   ∞   ∞
+    1   0   0   5   ∞   ∞   ∞
+    2   0   0   0   4   3   ∞
+    3   0   0   0   0   ∞   3
+    4   0   0   0   0   0   3
+    5   0   0   0   0   0   0
+    2)
+    3)
+        15  x   16
+
+210
+    1)
+        无向图
+    2)  
+        #define MaxVertexNum 100
+        //顶点
+        typedef struct VNode {
+            int data;   //顶点信息
+            ArcNode* first; //第一条边/弧
+        }VNode, AdjList[MaxVertexNum];
+
+        //边/弧
+        typedef struct ArcNode {
+            int adjvex; //边/弧指向哪个结点
+            struct ArcNode* next;   //指向下一条弧的指针
+            //InfoType info;    //边权值
+        }ArcNode;
+
+        //邻接表法存储图
+        typedef struct {
+            AdjList vertices;
+            int vexnum; //顶点数
+            int arcnum; //边数
+        } ALGraph;
+
+        R1: R2->R3->R10
+        R2: R1->R4->R20
+        R3: R1->R4->R30
+        R4: R2->R3->R40
+        R10: R1
+        R20: R2
+        R30: R3
+        R40: R4
+    3)
+                R1  R2  R3  R4
+        final   √   x   x   x
+        dist    0   3   2   ∞
+        path    -1  R1  R1  -1
+
+                R1  R2  R3  R4
+        final   √   x   √   x
+        dist    0   3   2   8
+        path    -1  R1  R1  R3
+
+                R1  R2  R3  R4
+        final   √   √   √   x
+        dist    0   3   2   7
+        path    -1  R1  R1  R2
+
+                R1  R2  R3  R4
+        final   √   √   √   √
+        dist    0   3   2   7
+        path    -1  R1  R1  R2
+
+        R1 到 
+                192.1.1.0/24  1
+                192.1.5.0/24  3
+                192.1.6.0/24  4
+                192.1.7.0/24  8
+
+211
+    1)  
+        (A,D) (D,E) (E,C) (C,B) 
+    2)
+        是
+    3)
+        环上的权值不全相同时，MST 唯一
+
+212
+    1)
+        (BJ,XA) (XA,WH) (WH,QD) (QD,NJ) (QD,JN) (JN,TL) (QD,CS)
+        2+2+3+2+3+2+2=16
+    2)
+        可以采用邻接表
+            Prim算法
+    3)
+        否
