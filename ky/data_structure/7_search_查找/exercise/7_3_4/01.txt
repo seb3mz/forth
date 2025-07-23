@@ -1,0 +1,33 @@
+01  C
+02  B
+03  A
+04  B
+05  C
+06  C
+07  A
+08  C   x   D
+09  D
+10  D
+11  C
+12  B
+13  D
+14  A
+15  D   x   C
+16  D
+17  B   x   C
+18  B
+19  A
+20  C
+21  D 
+22  A   x   B
+23  B
+24  C 
+25  A 
+26  B 
+27  D   x   C
+28  D 
+29  D 
+30  C 
+31  B   x   A
+32  D   x   B
+33  C   x   D
