@@ -1,0 +1,214 @@
+1
+    01 C
+    02 D
+    03 D
+    04 B x      C 
+    05 B
+    06 D?x      C
+    07 D
+    08 B x      D
+    09 C x      A
+    10 C
+    11 B
+    
+201
+    取指阶段:   
+            (PC) -> MAR         PCout MARin //将程序计数器 PC 里的指令地址送到 MAR
+            (MAR) -> MDR        1->R  MARout MDRin //控制器发出读存储器命令，将地址为 (MAR) 的内容送到 MDR 
+            (MDR) -> IR         MDRout IRin //将 (MDR) 指令送到 IR 中
+            (PC)+1 -> PC        // PC + 1
+
+    间指阶段:
+
+    执行阶段:
+            Op(IR)->CU      IRout CUin      //将指令的操作码送到 CU 
+            (R1)->LA        R1out LAin      //将 (R1) 送到 ALU 的暂存寄存器 LA
+            (R2)->MAR       R2out MARin     //将 (R2) 送到 MAR 进行取数
+            (MAR)->MDR      1->R  MARout MDRin  
+            (MDR)->R2       MDRout R2in     
+            (R2)->LB        R2out LBin      
+            (LA)+(LB)->R1   ALUin LAout LBout R1in //结果送到 R1
+    中断阶段:
+
+202 
+    ADD B, C    (B) + (C) -> B
+    取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+    执行阶段:
+            Op(IR) -> CU    IRout CUin
+            (B) -> Y        Bout Yin
+            (Y)+(C)->Z      Yout Cout ALUin Zin
+            (Z)->B          Zout Bin
+
+    SUB ACC, H  (ACC) - (H) -> ACC
+    取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+    执行阶段:
+            Op(IR) -> CU    IRout CUin
+            (ACC)-> Y       ACCout Yin
+            (Y)-(H) -> Z    Yout Hout Zin
+            (Z) -> ACC      Zout ACCin
+
+203
+    取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+    间指阶段:
+            (R0) -> MAR     R0out MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> Ad(IR) MDRout IRin
+    执行阶段:
+            Op(IR) -> CU    IRout CUin
+            (MDR) -> Y      MDRout Yin
+            (Y)+(MDR)->Z    Yout MDRout ALUin Zin
+            (Z) -> R0       Zout R0in
+
+204
+    1) a:MDR 
+       b:IR
+       c:MAR 
+       d:PC
+    2)
+       (d)->c   pc 值送往 MAR
+       (c)->a   读内存地址为 (c) 的内容到 MDR
+       (a) -> IR 将指令送往 IR
+       (d)+1->d 
+    3)
+       存:
+           ALU -> ACC -> a(MDR)
+           (a) -> (c)   1->w 将 MDR 里的值送向地址为 MAR 的内存
+       取:
+           (c) -> a     1->r 将地址为 (a) 的内存数据放到 MDR
+           (a) -> ALU   将数据放到 ALU
+    4)
+       LDA X 数据通路
+       取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+        执行阶段:
+            Op(IR) -> CU    IRout CUin
+            Ad(IR) -> MAR   IRout MARin
+            (MAR) -> MDR    MARout MDRin
+            (MDR)->ALU->ACC 
+    5)
+       ADD Y 数据通路
+       取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+        执行阶段:
+            Op(IR) -> CU    IRout CUin
+            Ad(IR) -> MAR   IRout MARin
+            (MAR) -> MDR    MARout MDRin
+            (ACC)+(MDR)->ACC ACCout MDRout ACCin
+    6)
+       STA Z 数据通路
+       取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+        执行阶段:
+            Op(IR) -> CU    IRout CUin
+            Ad(IR) -> MAR   IRout MARin
+            (ACC) -> MDR    ACCout MDRin
+            (MDR)-> (MAR)   MDRout MARin 1->w
+
+205 
+    1)
+        M:
+                MDR  <-> M
+                MAR -> M
+        IR:
+                MDR -> IR
+                MAR <- IR
+        PC:
+                MAR <- PC
+                IR -> PC
+        MAR:   
+                MDR -> MAR
+        ALU:
+                MDR <-> ALU
+                C -> ALU
+                ALU -> D 
+    2)
+        先取 R1 的内存数据
+        再取 R2 的内存数据
+
+206
+    ADD X,D 
+    取指阶段:
+            (PC) -> MAR     PCout MARin
+            (MAR) -> MDR    1->R MARout MDRin
+            (MDR) -> IR     MDRout IRin
+            (PC)+1 -> PC
+    间指阶段:
+            Op(IR) -> CU    IRout CUin
+            (XR)+(PC)->EAR  XRout PCout EARi
+    执行阶段:
+            (EAR) -> MAR    EARo MARi
+            (MAR) -> MDR    1->r MDRi
+            (MDR) -> ACC    MDRo ACCi 
+            (D) -> MAR      Do   MARi
+            (MAR) -> MDR    1->r MDRi
+            (MDR) -> X      MDRo Xi
+            (ACC)+(X)->LATCH LATCHi
+            (LATCH)-> ACC   LATCHo ACCi
+
+207
+    ADD (R1), R0: (R0) + ((R1)) -> (R1)
+                时钟        功能            有效控制信号
+间指阶段
+                C1         (R1)->MAR       R1out MARin
+                C2         M(MAR)->MDR     MemR, MDRinE
+                C3         
+                C4
+执行阶段
+                C1         (MDR)->A        MDRout Ain 
+                C2         (R0) -> ALU     R0out ALUin
+                C3         (A)+(ALU)->AC   ACCin
+                C4         (ACC)->R1       ACCout R1in
+        
+208 
+    1) 可见:通用寄存器 R0~R3, PC
+       若无暂存器 T，则 ALU 的 A、B 端口会同时获得两个相同的数据，使得数据通路不能正常工作
+    2) ALUop:3b
+       SRop:1b
+    3) 三态门,用于控制移位器与总线之间数据通路的连接与断开
+    4) 1 2 3 5 8
+    5) 起点     终点
+       6        9
+       7        4
+    6) 因为每条指令的长度为 16 位，按字节编址，所以每条指令占用 2 个内存单元，顺序
+       执行时，下条指令地址为 (PC)+2 . MUX 的一个输入端为 2,可便于执行 (PC)+2 操作
+
+209
+    1) SF = F15
+       A+B
+        OF = A15B15(F15)+(A15)(B15)F15  
+       A-B
+        OF = A15(B15)(F15)+(A15)B15F15
+    2) 因为在单总线结构中，每一时刻总线上只有一个数据有效，而 ALU 有两个输入端和一个输出端。
+       因此当 ALU 运算时，需要先用暂存器 Y 缓存其中一个输入端的数据，再通过总线传送另一个输入
+       端的数据。与此同时，ALU 的输出端产生运算结果，但由于总线正被占用，因此需要暂存其 Z，以缓存
+       ALU 的输出端数据
+    3) 16，rs 和 rd 来自指令寄存器 IR; rd 表示寄存器编号，应连接地址译码器
+    4) (PC) -> MAR
+       (MAR) -> MDR 1->r 
+       (MDR) -> IR
+       7个时钟周期
+    5) CU 部件 
+       IR 和 FR 输出信号
+       
+
