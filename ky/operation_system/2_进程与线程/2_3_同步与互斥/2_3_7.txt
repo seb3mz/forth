@@ -1,0 +1,230 @@
+1.
+    01	D
+    02	D
+    03 	A
+    04 	C
+    05 	C
+    06 	D
+    07	D
+    08	B
+    09	B
+    10	C
+    11	C
+    12	D
+    13	C
+    14	D
+    15	A
+    16	C
+    17	B
+    18	B   x   D
+    19	C
+    20	D
+    21	D
+    22	C
+    23	D
+    24	A
+    25	B
+    26	C
+    27	D
+    28	A   x   C
+    29	C
+    30	D   x   C
+    31	A
+    32	C B
+    33	B
+    34	C
+    35	B
+    36	B 
+    37	D
+    38	C
+    39	C
+    40	A
+    41	A
+    42	B
+    43	A
+    44	D
+    45	A
+    46	B
+    47	C
+    48	D
+    49	B   x   C
+    50	C
+    51	B
+    52	D
+    53	C
+    54	C
+    55	B
+    56	A
+    57	B
+    58	D
+    59	C
+    60	C
+
+201
+    不能 
+    x 为共享资源,未对其互斥访问,当 P2 执行到 x=0,切换到 P1 执行判断条件时,会出问题
+
+    P1
+    P();
+    x=1;
+    ...
+    if(x>=1)
+    {
+        V();
+        y=y+1;
+    } 
+
+    P2
+    P()
+    x=0;
+    ...
+    if(x<=1)
+    {
+        V();
+        t=t+2;
+    }
+
+202
+    semaphore mutex = 1;
+    int A_num = 0;
+    int B_num = 0; 
+    Insert_A()
+    {
+        P(mutex);
+        if(A_num - B_num >= M)
+        {
+            V(mutex);
+            return;
+        }
+        //存放 A 产品
+        A_num++;
+        V(mutex);
+    }
+
+    Insert_B()
+    {
+        P(mutex);
+        if(B_num - A_num >= N)
+        {
+            V(mutex);
+            return;
+        }
+        //存放 B 产品
+        B_num++;
+        V(mutex);
+    }
+    
+203
+    顾客进店后按序取号,并等待叫号;销售人员空闲后也按序叫号,并销售面包.因此同步算法只要对
+    顾客取号和销售人员叫号进行合理同步即可.使用两个变量 i 和 j 分别记录当前的取号值和叫号
+    值,并各自使用一个互斥信号量用于对 i 和 j 进行访问和修改
+
+    int i = 0, j = 0;
+    semaphore mutex_i = 1, mutex_j = 1;
+    //顾客
+    Consumer()
+    {
+        进入面包店;
+        P(mutex_i);
+        取号 i;
+        i++;
+        V(mutex_i);
+        等待叫号 i 并购买面包;  
+    }
+    //销售人员
+    Seller()
+    {
+        while(1)
+        {
+            P(mutex_j);
+            if(j < i)
+            {
+                叫号 j;
+                j++;
+                V(mutex_j);
+                销售面包;
+            }
+            else
+            {
+                V(mutex_j);
+                休息片刻;
+            }
+        }
+    }
+
+204
+    本题是生产者-消费者问题的变体,生产者"车间A"和消费者"装配车间"共享缓冲区"货架F1";生产者"车间B"
+    和消费者"装配车间"共享缓冲区"货架F2".因此,可为它们设置6个信号量;empty1对应货架F1上的空闲空间,
+    初值为10;full1对应货架F1上面的A产品,初值为0;empty2对应货架F2上的空闲空间,初值为10;full2对
+    应货架F2上面的B产品,初值为0;mutex1用于互斥访问货架F1,初值为1;mutex2用于互斥访问货架F2,初值为1
+    A 车间的工作过程可描述为:
+    while(1)
+    {
+        生产一个产品A;
+        P(empty1);
+        P(mutex1);
+        将产品A存放到货架F1上;
+        V(mutex1);
+        V(full1);
+    }
+    B 车间的工作过程可描述为:
+    while(1)
+    {
+        生产一个产品B;
+        P(empty2);
+        P(mutex2);
+        将产品B存放到货架F2上;
+        V(mutex2);
+        V(full2);
+    }
+    装配车间的工作过程可描述为
+    while(1)
+    {
+        P(full1);
+        P(mutex1);
+        从货架 F1 上取一个 A 产品;
+        V(mutex1);
+        V(empty1);
+        P(full2);
+        P(mutex2);
+        从货架 F2 上取一个 B 产品;
+        V(mutex2);
+        V(empty2);
+    }
+
+205
+    从井中取水并放入水缸是一个连续的动作,可视为一个进程;从缸中取水可视为另一个进程.
+    设水井和水缸为临界资源,引入 well 和 vat;三个水桶无论是从井中取水还是将水倒入水
+    缸都是一次一个,应该给它们一个信号量 pail,抢不到水桶的进程只好等待.水缸满时,不可再放水,
+    设置 empty 信号量来控制入水量;水缸空时,不可以取水,设置 full 信号量来控制.
+    semaphore well = 1; 
+    semaphore vat = 1;
+    semaphore empty = 10;
+    semaphore full = 0;
+    semaphore pail = 3;
+    //老和尚
+    while(1)
+    {
+        P(full);
+        P(pail);
+        P(vat);
+        从水缸中打一桶水;
+        V(vat);
+        V(empty);
+        喝水;
+        V(pail);
+    }
+    //小和尚
+    while(1)
+    {
+        P(empty);
+        P(pail);
+        P(well);
+        从井中打一桶水;
+        V(well);
+        P(vat);
+        将水倒入水缸中;
+        V(vat);
+        V(full);
+        V(pail);
+    }
