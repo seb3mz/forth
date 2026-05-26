@@ -1,0 +1,40 @@
+1
+    01  C   x   B
+    02  D   
+    03  D
+    04  C
+    05  A
+    06  C
+    07  A
+    08  C
+    09  A   x   B
+    10  A
+    11  D
+    12  D
+    13  D
+    14  D
+    15  C   x   D
+    16  A
+    17  C
+    18  D   x   C
+    19  B
+    20  B
+    21  D
+    22  B
+    23  B   D   C   A   B
+    24  B
+    25  A
+    26  C
+    27  A
+    28  A   C   DxC
+    29  B
+    30  C
+    31  A
+    32  A   x   B
+    33  C
+    34  C
+    35  A
+    36  C
+    37  B   x   C
+    38  B
+    39  C   x   B
